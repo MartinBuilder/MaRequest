@@ -4,30 +4,32 @@ using UnityEngine;
 
 public class Holder : MonoBehaviour {
 
-    [SerializeField] private GameObject target;
-    [SerializeField] private SlingshotCenterPlane slingshotCenter;
-    public bool Holding { get; set; } = true;
+    [SerializeField] private Rigidbody heldGO;
+    public bool Holding { get; set; } = false;
 
-    private Rigidbody targetRb;
     private Collider targetCollider;
+    private Vector3 newPos = Vector3.zero;
 
-    private void Awake() {
-        targetRb = target.GetComponent<Rigidbody>();
+    private void Update() {
 
-        slingshotCenter.GameobjectEntering += OnGameObjectEntering;
-    }
-
-    private void FixedUpdate() {
         if (Holding) {
-            targetRb.isKinematic = true;
-            targetRb.MovePosition(transform.position);
+            heldGO.isKinematic = true;
+            newPos = transform.position;
         } else {
-            targetRb.isKinematic = false;
+            heldGO.isKinematic = false;
+            heldGO = null;
         }
     }
 
-    private void OnGameObjectEntering() {
-        Holding = false;
+    private void FixedUpdate() {
+        heldGO?.MovePosition(newPos);
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if (!Holding && other.tag == "cube" && other.GetComponent<Rigidbody>() != null) {
+            heldGO = other.GetComponent<Rigidbody>();
+            Holding = true;
+        }
     }
 
 }

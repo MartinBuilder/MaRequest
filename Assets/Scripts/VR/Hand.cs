@@ -78,6 +78,14 @@ public class Hand : MonoBehaviour
         controllerModel.gameObject.SetActive(false);
     }
 
+    public bool GetPinchDown() {
+        return m_GrabAction.GetStateDown(m_Pose.inputSource);
+    }
+
+    public bool GetPinchUp() {
+        return m_GrabAction.GetStateUp(m_Pose.inputSource);
+    }
+
     public void Drop()
     {
         //null check
