@@ -7,7 +7,7 @@ public class SnowballStack : MonoBehaviour {
     [SerializeField] private Rigidbody snowball;
 
     private Rigidbody storageSnowball;
-    private Rigidbody current;
+    private bool pickedUp = true;
 
     private void Start() {
         SpawnSnowball();
@@ -16,14 +16,18 @@ public class SnowballStack : MonoBehaviour {
     private void OnTriggerStay(Collider other) {
         var currentHand = other?.GetComponent<Hand>();
 
-        if (currentHand != null && currentHand.GetPinchDown()) {
-            current = storageSnowball;
-            current.isKinematic = false;
+        if (currentHand != null && currentHand.GetPinchDown() && pickedUp) {
+            storageSnowball.isKinematic = false;
 
             SpawnSnowball();
+            pickedUp = false;
         }
 
         
+    }
+
+    private void OnTriggerExit(Collider other) {
+        pickedUp = true;
     }
 
     private void SpawnSnowball() {

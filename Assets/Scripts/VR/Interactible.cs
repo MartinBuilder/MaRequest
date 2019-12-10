@@ -7,4 +7,8 @@ public class Interactible : MonoBehaviour
 {
     [HideInInspector]
     public Hand m_activeHand = null;
+
+    public bool Enabled {
+        get; set;
+    } = true;
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
@@ -8,6 +9,9 @@ public class Hand : MonoBehaviour
     public SteamVR_Action_Boolean m_GrabAction = null;
 
     private SteamVR_RenderModel controllerModel;
+
+    public static Action<Rigidbody> HeldRb;
+    public static Action<Rigidbody> ReleaseRb;
     
     private SteamVR_Behaviour_Pose m_Pose = null;
     private FixedJoint m_joint = null;
@@ -71,11 +75,16 @@ public class Hand : MonoBehaviour
 
         // attach
         Rigidbody targetBody = m_curentInteractible.GetComponent<Rigidbody>();
+        HeldRb?.Invoke(targetBody);
         m_joint.connectedBody = targetBody;
 
         //set active hand
         m_curentInteractible.m_activeHand = this;
         controllerModel.gameObject.SetActive(false);
+    }
+
+    public Interactible GetCurrentInteractable() {
+        return m_curentInteractible;
     }
 
     public bool GetPinchDown() {
@@ -94,6 +103,7 @@ public class Hand : MonoBehaviour
 
         //apply velocity
         Rigidbody targetBody = m_curentInteractible.GetComponent<Rigidbody>();
+        ReleaseRb?.Invoke(targetBody);
         targetBody.velocity = m_Pose.GetVelocity();
         targetBody.angularVelocity = m_Pose.GetAngularVelocity();
 
@@ -113,6 +123,9 @@ public class Hand : MonoBehaviour
         float distance = 0.0f;
         foreach (Interactible interactible in m_contactInteracitbles)
         {
+            if (!interactible.Enabled)
+                continue;
+
             distance = (interactible.transform.position - transform.position).sqrMagnitude;
 
             if (distance < minDistance)
