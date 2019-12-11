@@ -9,6 +9,7 @@ TagManager:
   - Floor
   - cube
   - Sphere
+  - Water
   layers:
   - Default
   - TransparentFX
