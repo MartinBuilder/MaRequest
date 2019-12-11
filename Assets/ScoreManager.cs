@@ -8,10 +8,11 @@ public class ScoreManager : MonoBehaviour {
         get; private set;
     } = 0;
 
-    public static Action<> ScoreAdded;
+    public static Action<int> ScoreAdded;
 
     private void Awake() {
         Score = 0;
+        ScoreAdded += OnScoreAdded;
     }
 
     private static void OnScoreAdded(int scoreToAdd) {

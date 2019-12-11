@@ -10,6 +10,7 @@ TagManager:
   - cube
   - Sphere
   - Water
+  - Spawner
   layers:
   - Default
   - TransparentFX

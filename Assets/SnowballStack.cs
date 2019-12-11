@@ -5,9 +5,12 @@ using UnityEngine;
 public class SnowballStack : MonoBehaviour {
 
     [SerializeField] private Rigidbody snowball;
+    [SerializeField] private int maxSnowballs = 5;
+    private int currentSnowballs = 0;
 
     private Rigidbody storageSnowball;
-    private bool pickedUp = true;
+    private bool entered = true;
+    private bool canPickup = true;
 
     private void Start() {
         SpawnSnowball();
@@ -16,18 +19,30 @@ public class SnowballStack : MonoBehaviour {
     private void OnTriggerStay(Collider other) {
         var currentHand = other?.GetComponent<Hand>();
 
-        if (currentHand != null && currentHand.GetPinchDown() && pickedUp) {
+        if (canPickup && currentHand != null && currentHand.GetPinchDown() && entered) {
             storageSnowball.isKinematic = false;
 
+            currentSnowballs++;
             SpawnSnowball();
-            pickedUp = false;
+            entered = false;
         }
 
         
     }
 
+    private void Update() {
+        if(currentSnowballs >= maxSnowballs) {
+            canPickup = false;
+        }
+    }
+
+    public void RefillStack() {
+        canPickup = true;
+        currentSnowballs = 0;
+    }
+
     private void OnTriggerExit(Collider other) {
-        pickedUp = true;
+        entered = true;
     }
 
     private void SpawnSnowball() {
