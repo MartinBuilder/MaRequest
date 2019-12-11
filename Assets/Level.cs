@@ -8,11 +8,11 @@ public class Level : ScriptableObject {
 
     private CubeSpawner cubeSpawner;
 
-    private void OnEnable() {
-        cubeSpawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<CubeSpawner>();
+    private void Awake() {
+        Debug.Log("Now");
     }
 
     public void Generate() {
-        cubeSpawner.SpawnObjects(width, height);
+        //cubeSpawner.SpawnObjects(width, height);
     }
 }
