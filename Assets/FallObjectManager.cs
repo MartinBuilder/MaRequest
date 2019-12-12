@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class FallObjectManager : MonoBehaviour {
     private List<FallObject> spawnedFallObjects = new List<FallObject>();
-    [SerializeField] private CubeSpawner cubeSpawner;
+
+    public static FallObjectManager instance {
+        get; private set;
+    }
+
+    private void OnEnable() {
+        instance = this;
+    }
 
     private void Awake() {
         CubeSpawner.FallObjectSpawned += OnFallObjectSpawned;
