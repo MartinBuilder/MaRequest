@@ -6,6 +6,14 @@ public class CubeSpawner : MonoBehaviour {
     
     [SerializeField] private FallObject prefab;
 
+    public static CubeSpawner instance {
+        get; private set;
+    }
+
+    private void OnEnable() {
+        instance = this;
+    }
+
     public static Action<FallObject> FallObjectSpawned;
 
     public void SpawnObjects(int width, int height) {
