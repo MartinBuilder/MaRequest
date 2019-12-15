@@ -6,8 +6,9 @@ public class Level : ScriptableObject {
     public int width = 3;
     public int height = 3;
     public GenerationType generationType;
+    public Vector3 size = Vector3.one;
 
     public void Generate() {
-        CubeSpawner.instance.SpawnObjects(width, height, generationType);
+        CubeSpawner.instance.SpawnObjects(width, height, generationType, size);
     }
 }
