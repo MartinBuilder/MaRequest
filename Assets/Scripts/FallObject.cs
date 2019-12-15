@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FallObject : MonoBehaviour {
 
-    [SerializeField] private float maxFallDepth = -1;
+    [SerializeField] private float maxFallDepth = -5;
     [SerializeField] private int scoreGain = 100;
 
     private void Update() {

@@ -12,8 +12,13 @@ public class SnowballStack : MonoBehaviour {
     private bool entered = true;
     private bool canPickup = true;
 
+    private List<Rigidbody> activeSnowballs;
+
     private void Start() {
+        activeSnowballs = new List<Rigidbody>();
+        
         SpawnSnowball();
+        
     }
 
     private void OnTriggerStay(Collider other) {
@@ -27,7 +32,13 @@ public class SnowballStack : MonoBehaviour {
             entered = false;
         }
 
-        
+        foreach(Rigidbody snowball in activeSnowballs) {
+            if(snowball.position.y < 10) {
+                activeSnowballs.Remove(snowball);
+                Destroy(snowball.gameObject);
+            }
+        }
+
     }
 
     private void Update() {
@@ -41,12 +52,16 @@ public class SnowballStack : MonoBehaviour {
         currentSnowballs = 0;
     }
 
+    public bool SnowballsEmpty() => currentSnowballs >= maxSnowballs;
+    public bool NoSnowballsActive() => activeSnowballs.Count == 0;
+
     private void OnTriggerExit(Collider other) {
         entered = true;
     }
 
     private void SpawnSnowball() {
         storageSnowball = Instantiate(snowball, transform);
+        activeSnowballs.Add(storageSnowball);
         storageSnowball.isKinematic = true;
     }
 

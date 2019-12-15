@@ -9,6 +9,14 @@ public class LevelManager : MonoBehaviour {
     private Level currentLevel;
     private int levelCounter;
 
+    public static LevelManager instance {
+        get; private set;
+    }
+
+    private void OnEnable() {
+        instance = this;
+    }
+
     public void Start() {
         if(levels?.Count > 0) {
             NextLevel();
@@ -32,8 +40,11 @@ public class LevelManager : MonoBehaviour {
             levelCounter = 0;
         } else {
             levelCounter++;
-            levelCounter = Mathf.Clamp(levelCounter, 0, levels.Count - 1);
-            SetLevel(levels[levelCounter]);
+            if(levelCounter > levels.Count - 1) {
+                // Go to score screen
+            } else {
+                SetLevel(levels[levelCounter]);
+            }
         }
     }
 

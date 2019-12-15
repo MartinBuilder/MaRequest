@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8028612354923410966}
   - component: {fileID: 6539018388732397633}
   - component: {fileID: 4488293885538342064}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,3 +122,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef7c984db416eae4483309ac2d96ab04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxFallDepth: -1
+  scoreGain: 100

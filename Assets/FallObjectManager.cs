@@ -29,5 +29,15 @@ public class FallObjectManager : MonoBehaviour {
         spawnedFallObjects.Add(fallObject);
     }
 
+    public int AmountOfActiveObjects() {
+        int num = 0;
+        foreach(FallObject fallObject in spawnedFallObjects) {
+            if(fallObject.gameObject.activeSelf) {
+                num++;
+            }
+        }
+        return num;
+    }
+
 }
 
