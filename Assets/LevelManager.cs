@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour {
 
     [SerializeField] private List<Level> levels = new List<Level>();
+    [SerializeField] private Level emptyLevel;
+    [SerializeField] private Button submitButton;
 
     private Level currentLevel;
     private int levelCounter;
@@ -18,6 +21,8 @@ public class LevelManager : MonoBehaviour {
     }
 
     public void Start() {
+        submitButton.interactable = false;
+
         if(levels?.Count > 0) {
             NextLevel();
         }
@@ -41,7 +46,8 @@ public class LevelManager : MonoBehaviour {
         } else {
             levelCounter++;
             if(levelCounter > levels.Count - 1) {
-                // Go to score screen
+                submitButton.interactable = true;
+                SetLevel(emptyLevel);
             } else {
                 SetLevel(levels[levelCounter]);
             }

@@ -28,13 +28,14 @@ public class Holder : MonoBehaviour {
     }
 
     private void Update() {
+        newPos = transform.position;
         if (heldGO != null) {
             if (Holding) {
                 heldGO.isKinematic = true;
-                newPos = transform.position;
             } else {
                 heldGO.isKinematic = false;
                 heldGO.velocity = GetComponent<Rigidbody>().velocity;
+                heldGO.GetComponent<Snowball>().startCountdown = true;
                 heldGO = null;
             }
         }
@@ -58,6 +59,7 @@ public class Holder : MonoBehaviour {
     }
 
     private void FixedUpdate() {
+        
         heldGO?.MovePosition(newPos);
 
         if (heldGO?.position.z > center.position.z + .2f && heldGO?.position.z < center.position.z + 3f) {

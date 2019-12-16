@@ -1,25 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
-public class ScoreInput : MonoBehaviour
-{
-    [SerializeField] private InputField Score;
-    [SerializeField] private InputField Name;
+public class ScoreInput : MonoBehaviour {
 
-    [SerializeField] private Button Submit;
+    [SerializeField] TextMeshProUGUI nameLabel;
 
-    public void CallRegister()
-    {
-        StartCoroutine(Register());
+    public void InputScore() {
+        CallRegister(nameLabel.text, ScoreManager.Score);
     }
 
-    IEnumerator Register()
+    private void CallRegister(string name, int score)
+    {
+        StartCoroutine(Register(name, score));
+    }
+
+    IEnumerator Register(string name, int score)
     {
         WWWForm form = new WWWForm();
-        form.AddField("name", Name.text);
-        form.AddField("score", Score.text);
+        form.AddField("name", name);
+        form.AddField("score", score);
         WWW www = new WWW("http://25179.hosts.ma-cloud.nl/bewijzenmap/MaRequest/sqlconnect/register.php", form);
         yield return www;
         if(www.text == "0")
@@ -30,10 +31,5 @@ public class ScoreInput : MonoBehaviour
         {
             Debug.LogError("Registration of score failed. Error #" + www.text);
         }
-    }
-
-    public void VerifyInputs()
-    {
-        Submit.interactable = (Name.text.Length >= 3);
     }
 }
