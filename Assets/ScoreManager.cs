@@ -19,8 +19,6 @@ public class ScoreManager : MonoBehaviour {
 
     private void Update() {
         scoreLabel.text = Score.ToString();
-
-        Debug.Log(Camera.allCamerasCount);
     }
 
     private static void OnScoreAdded(int scoreToAdd) {
