@@ -26,7 +26,7 @@ public class CubeSpawner : MonoBehaviour {
                 for (int j = 0; j < height; j++) {
                     var clone = Instantiate(prefab, transform, false);
                     var offset = (j % 2) * 0.3f;
-                    clone.transform.position += new Vector3((i - width / 2 + offset) * size.x, j * size.y, 0);
+                    clone.transform.position += new Vector3((i - width / 2 + offset) * size.x, (j * size.y) * 2, 0);
                     clone.transform.localScale = size;
                     FallObjectSpawned.Invoke(clone);
                 }
@@ -35,7 +35,7 @@ public class CubeSpawner : MonoBehaviour {
             for (int i = 0; i < width; i++) {
                 for (int j = 0; j < height; j++) {
                     var clone = Instantiate(prefab, transform, false);
-                    clone.transform.position += new Vector3((i - width / 2) * size.x, j * size.y, 0);
+                    clone.transform.position += new Vector3((i - width / 2) * size.x, (j * size.y) * 2, 0);
                     clone.transform.localScale = size;
                     FallObjectSpawned.Invoke(clone);
                 }

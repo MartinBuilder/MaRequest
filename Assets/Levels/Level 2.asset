@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 5
   height: 3
-  generationType: 1
-  size: {x: 2, y: 3, z: 2}
+  generationType: 0
+  size: {x: 1.2, y: 1.2, z: 1.2}
