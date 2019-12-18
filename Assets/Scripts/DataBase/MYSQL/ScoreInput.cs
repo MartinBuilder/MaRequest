@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -7,6 +8,13 @@ using UnityEngine.SceneManagement;
 public class ScoreInput : MonoBehaviour {
 
     [SerializeField] TextMeshProUGUI nameLabel;
+
+    private Action<bool> FinishedRegistration;
+
+    private void Awake()
+    {
+        FinishedRegistration += OnRegistrationFinished;
+    }
 
     public void InputScore() {
         CallRegister(nameLabel.text, ScoreManager.Score);
@@ -27,10 +35,21 @@ public class ScoreInput : MonoBehaviour {
         if(www.text == "0")
         {
             Debug.Log("New score created successfully.");
+            FinishedRegistration?.Invoke(true);
         }
         else
         {
             Debug.LogError("Registration of score failed. Error #" + www.text);
+            FinishedRegistration?.Invoke(false);
         }
     }
+
+    private void OnRegistrationFinished(bool succes)
+    {
+        if(succes)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+    }
+
 }
