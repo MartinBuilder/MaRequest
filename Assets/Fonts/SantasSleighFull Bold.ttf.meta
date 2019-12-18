@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 953f30b8899226542b0360ecccfb1251
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Santa'sSleighFull
+  fontNames:
+  - Santa'sSleighFull
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: a189fd7ce15d9b74e982c86370771e47, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
