@@ -47,6 +47,7 @@ public class SnowballStack : MonoBehaviour {
         if(Input.GetKeyDown(KeyCode.T)) {
             currentSnowballs++;
             CurrentSnowballsChanged?.Invoke(GetCurrentSnowballs());
+            SpawnSnowball();
         }
     }
 
