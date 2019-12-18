@@ -22,6 +22,11 @@ public class ScoreInput : MonoBehaviour {
 
     private void CallRegister(string name, int score)
     {
+
+        if (name == string.Empty) {
+            FinishedRegistration.Invoke(true);
+        }
+
         StartCoroutine(Register(name, score));
     }
 
