@@ -22,21 +22,23 @@ public class CubeSpawner : MonoBehaviour {
         transform.position = startPos + new Vector3(0, size.y / 2, 0);
 
         if (generationType == GenerationType.Jagged) {
-            for (int i = 0; i < width; i++) {
-                for (int j = 0; j < height; j++) {
+            for (int i = 0, k = 0; i < width; i++) {
+                for (int j = 0; j < height; j++, k++) {
                     var clone = Instantiate(prefab, transform, false);
                     var offset = (j % 2) * 0.3f;
                     clone.transform.position += new Vector3((i - width / 2 + offset) * size.x, (j * size.y) * 2, 0);
                     clone.transform.localScale = size;
+                    clone.name = "Can " + k;
                     FallObjectSpawned.Invoke(clone);
                 }
             }
         } else if (generationType == GenerationType.Square) {
-            for (int i = 0; i < width; i++) {
-                for (int j = 0; j < height; j++) {
+            for (int i = 0, k = 0; i < width; i++) {
+                for (int j = 0; j < height; j++, k++) {
                     var clone = Instantiate(prefab, transform, false);
                     clone.transform.position += new Vector3((i - width / 2) * size.x, (j * size.y) * 2, 0);
                     clone.transform.localScale = size;
+                    clone.name = "Can " + k;
                     FallObjectSpawned.Invoke(clone);
                 }
             }
