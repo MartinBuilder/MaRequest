@@ -25,7 +25,7 @@ public class SnowballStackUI : MonoBehaviour {
         currentFillAmount = Mathf.Lerp(currentFillAmount, targetFillAmount, Time.deltaTime * fillSpeed);
         frontImage.fillAmount = currentFillAmount;
 
-        if((bool) lastSnowball?.startCountdown) {
+        if(lastSnowball != null && lastSnowball.startCountdown) {
             // TO DO    calculate time for countdown
         }
     }

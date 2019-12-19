@@ -53,7 +53,7 @@ public class ScoreInput : MonoBehaviour {
     {
         if(succes)
         {
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(0);
         }
     }
 

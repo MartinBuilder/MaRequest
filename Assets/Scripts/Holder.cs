@@ -26,6 +26,15 @@ public class Holder : MonoBehaviour {
     private bool checkingForDistance = false;
     private Vector3 lastHandPos;
 
+    private BoxCollider boxCollider;
+    private Rigidbody rigidbody;
+
+    private void Awake()
+    {
+        boxCollider = GetComponent<BoxCollider>();
+        rigidbody = GetComponent<Rigidbody>();
+    }
+
     private void Start() {
         myInteractible = GetComponent<Interactible>();
 
@@ -39,12 +48,13 @@ public class Holder : MonoBehaviour {
     private void Update() {
         newPos = transform.position;
         newRot = transform.rotation;
+
         if (heldGO != null) {
             if (Holding) {
                 heldGO.isKinematic = true;
             } else {
                 heldGO.isKinematic = false;
-                heldGO.velocity = GetComponent<Rigidbody>().velocity;
+                heldGO.velocity = rigidbody.velocity;
                 heldGO.GetComponent<Snowball>().startCountdown = true;
                 heldGO = null;
             }
@@ -52,33 +62,31 @@ public class Holder : MonoBehaviour {
 
         if (heldGO == null && transform.position.z < center.position.z) {
 
-            GetComponent<BoxCollider>().enabled = true;
+            boxCollider.enabled = true;
         }
 
         if (checkingForDistance) {
             if (Vector3.Distance(transform.position, lastHandPos) > 0.7) {
 
-                GetComponent<BoxCollider>().enabled = false;
+                boxCollider.enabled = false;
                 checkingForDistance = false;
             }
         }
 
-        bandLeft.transform.position = Vector3.Lerp(transform.position, leftPos.position, 0.5f);
-        bandRight.transform.position = Vector3.Lerp(transform.position, rightPos.position, 0.5f);
+        SetBandTransform(bandLeft.transform, leftPos.position, new Vector3(90, 0, 0));
+        SetBandTransform(bandRight.transform, rightPos.position, new Vector3(-90, 0, 0));
+    }
 
-        Vector3 scale = bandLeft.transform.localScale;
-        scale.y = Vector3.Distance(transform.position, leftPos.position) / 2 - bandLength;
-        bandLeft.transform.localScale = scale;
+    private void SetBandTransform(Transform band, Vector3 position, Vector3 orientation)
+    {
+        band.position = Vector3.Lerp(transform.position, position, 0.5f);
 
-        scale = bandLeft.transform.localScale;
-        scale.y = Vector3.Distance(transform.position, rightPos.position) / 2 - bandLength;
-        bandRight.transform.localScale = scale;
+        Vector3 scale = band.localScale;
+        scale.y = Vector3.Distance(transform.position, position) / 2 - bandLength;
+        band.localScale = scale;
 
-        bandLeft.transform.LookAt(transform);
-        bandLeft.transform.eulerAngles += new Vector3(90, 0, 0);
-
-        bandRight.transform.LookAt(transform);
-        bandRight.transform.eulerAngles += new Vector3(-90, 0, 0);
+        band.LookAt(transform);
+        band.eulerAngles += orientation;
     }
 
     public void ReleaseHeldGO() {
@@ -110,7 +118,7 @@ public class Holder : MonoBehaviour {
 
     private void OnReleaseRb(Rigidbody rb) {
 
-        if (rb == GetComponent<Rigidbody>() && Vector3.Distance(transform.position, Vector3.Lerp(leftPos.position, rightPos.position, 0.5f)) > 1) {
+        if (rb == rigidbody && Vector3.Distance(transform.position, Vector3.Lerp(leftPos.position, rightPos.position, 0.5f)) > 1) {
             checkingForDistance = true;
             
             lastHandPos = myInteractible.m_activeHand.transform.position;

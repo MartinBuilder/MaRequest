@@ -20,18 +20,23 @@ public class Snowball : MonoBehaviour
 
     private void Update() {
 
-        if (transform.position.y < -10) {
-            startCountdown = true;
+        if (!startCountdown && transform.position.y < -10) {
+            RemoveSnowball();
         }
 
         if (startCountdown) {
             timeAlive += Time.deltaTime;
             if (timeAlive > timeBeforeKill) {
-                snowballStack.activeSnowballs.Remove(GetComponent<Rigidbody>());
-
-                Destroy(gameObject);
+                RemoveSnowball();
             }
         }
+    }
+
+    private void RemoveSnowball()
+    {
+        snowballStack.activeSnowballs.Remove(GetComponent<Rigidbody>());
+
+        Destroy(gameObject);
     }
 
 }
